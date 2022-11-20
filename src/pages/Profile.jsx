@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/esm/Col'
 import Container from 'react-bootstrap/esm/Container'
 
 // import ronaldhino from '../assets/ronaldhino.jpg'
-import Transaction from '../components/partials/Transaction'
+import Transaction from '../components/partials/MyTransaction'
 
 const CardTitle = styled.p`
 font-weight: bold;

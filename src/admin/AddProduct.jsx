@@ -8,6 +8,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import styled from 'styled-components';
+import { useNavigate } from "react-router-dom";
 
 export default function AddProduct() {
     // const Con = styled.div`
@@ -27,17 +28,19 @@ export default function AddProduct() {
     //     console.log(product)
     // }
 
-    const [product, setProduct] = useState({ name: "", price: "", image: "" })
+
+    const navigate = useNavigate();
+    let FindData = localStorage.getItem('PRODUCT_DATA')
+    let data = JSON.parse(FindData)
+    let ProductContent = []
+    const [product, setProduct] = useState({ id: "", name: "", price: "", image: "" })
+
+    // setProduct(...product, data.length + 1)
 
     const gambar = product.image
-
-    let FindData = localStorage.getItem('PRODUCT_DATA')
-    let ProductContent = []
-
     const submitHandle = (e) => {
         e.preventDefault()
 
-        let data = JSON.parse(FindData)
 
         if (data == null) {
             ProductContent.push(product)
@@ -50,7 +53,10 @@ export default function AddProduct() {
             ProductContent.push(product)
             localStorage.setItem("PRODUCT_DATA", JSON.stringify(ProductContent))
         }
+        navigate("/");
     }
+
+    
 
     return (
         <>

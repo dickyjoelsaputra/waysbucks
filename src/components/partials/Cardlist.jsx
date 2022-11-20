@@ -7,9 +7,9 @@ import CleponCoffee from '../../assets/kopi/Clepon Coffe.jpg'
 import HanamiLatte from '../../assets/kopi/Hanami Latte.jpg'
 import GreenTea from '../../assets/kopi/Ice Coffee Green Tea.jpg'
 import PalmSugar from '../../assets/kopi/Ice Coffee Palm Sugar.jpg'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
-export default function Cardlist() {
+export default function Cardlist({ data }) {
     const Badan = styled.div`
     margin : 5% 0px;
     `
@@ -27,86 +27,36 @@ export default function Cardlist() {
     `
 
 
-
+    console.log(data)
     return (
         <>
             <Badan>
                 <Row>
-                    <Col>
-                        <Link to="/product-detail" className='text-decoration-none'>
-                            <WrapTambahan>
-                                <Card bg="danger bg-opacity-25" style={{ width: '100%' }}>
-                                    <Card.Img variant="top" src={CleponCoffee} />
-                                    <Card.Body>
-                                        <Card.Title>
-                                            <CardTitle>
-                                                Ice Coffee Palm Sugar
-                                            </CardTitle>
-                                        </Card.Title>
-                                        <Card.Text>
-                                            <CardPrice>
-                                                Rp.20.000
-                                            </CardPrice>
-                                        </Card.Text>
-                                    </Card.Body>
-                                </Card>
-                            </WrapTambahan>
-                        </Link>
-                    </Col>
-
-                    <Col>
-                        <WrapTambahan>
-                            <Card bg="danger bg-opacity-25" style={{ width: '100%' }}>
-                                <Card.Img variant="top" src={HanamiLatte} />
-                                <Card.Body>
-                                    <Card.Title>
-                                        <CardTitle>
-                                            Ice Coffee Green Tea
-                                        </CardTitle>
-                                    </Card.Title>
-                                    <Card.Text>
-                                        Rp.15.000
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </WrapTambahan>
-                    </Col>
-
-                    <Col>
-                        <WrapTambahan>
-                            <Card bg="danger bg-opacity-25" style={{ width: '100%' }}>
-                                <Card.Img variant="top" src={GreenTea} />
-                                <Card.Body>
-                                    <Card.Title>
-                                        <CardTitle>
-                                            Hanami Latte
-                                        </CardTitle>
-                                    </Card.Title>
-                                    <Card.Text>
-                                        Rp.25.000
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </WrapTambahan>
-                    </Col>
-
-                    <Col>
-                        <WrapTambahan>
-                            <Card bg="danger bg-opacity-25" style={{ width: '100%' }}>
-                                <Card.Img variant="top" src={PalmSugar} />
-                                <Card.Body>
-                                    <Card.Title>
-                                        <CardTitle>
-                                            Clepon Coffee
-                                        </CardTitle>
-                                    </Card.Title>
-                                    <Card.Text>
-                                        Rp.20.000
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </WrapTambahan>
-                    </Col>
+                    {data.map((Products) => {
+                        return <>
+                            <Col md={3} >
+                                <Link to={"/detail-product/" + Products.name + "/" + Products.price + "/"} className='text-decoration-none'>
+                                    <WrapTambahan>
+                                        <Card bg="danger bg-opacity-25" style={{ width: '100%' }}>
+                                            <Card.Img variant="top" src={Products.image} />
+                                            <Card.Body>
+                                                <Card.Title>
+                                                    <CardTitle>
+                                                        {Products.name}
+                                                    </CardTitle>
+                                                </Card.Title>
+                                                <Card.Text>
+                                                    <CardPrice>
+                                                        {Products.price}
+                                                    </CardPrice>
+                                                </Card.Text>
+                                            </Card.Body>
+                                        </Card>
+                                    </WrapTambahan>
+                                </Link>
+                            </Col>
+                        </>
+                    })}
                 </Row>
             </Badan>
         </>

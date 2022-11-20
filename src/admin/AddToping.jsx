@@ -8,11 +8,14 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import styled from 'styled-components';
+import { useNavigate } from "react-router-dom";
 
 export default function AddToping() {
     const Gambor = styled.img`
         max-width: 100%;
     `
+
+    const navigate = useNavigate();
     const [toping, setToping] = useState({ name: "", price: "", image: "" })
 
     const gambar = toping.image
@@ -36,6 +39,7 @@ export default function AddToping() {
             TopingContent.push(toping)
             localStorage.setItem("TOPING_DATA", JSON.stringify(TopingContent))
         }
+        navigate("/");
     }
 
     return (

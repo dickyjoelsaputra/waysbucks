@@ -7,6 +7,9 @@ import Cardlist from '../components/partials/Cardlist'
 
 export default function Main() {
 
+    let FindData = localStorage.getItem('PRODUCT_DATA')
+    let data = JSON.parse(FindData)
+
     const Con = styled.div`
     margin: 0 10%;`
 
@@ -15,7 +18,7 @@ export default function Main() {
             <Navibar />
             <Con>
                 <Jumbotron />
-                <Cardlist />
+                <Cardlist data={data} />
             </Con>
         </>
     )

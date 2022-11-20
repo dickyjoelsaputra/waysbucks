@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import Navibar from '../components/Navibar'
 import Container from 'react-bootstrap/esm/Container'
 import Row from 'react-bootstrap/esm/Row'
 import Col from 'react-bootstrap/esm/Col'
 import styled from 'styled-components'
-import cleponcoffe from '../assets/kopi/Clepon Coffe.jpg'
-import { Toping } from '../data/dummyTopping'
+// import { Toping } from '../data/dummyTopping'
 import buttonceklis from '../assets/buttonceklis.png'
+import { useParams } from 'react-router-dom'
+import { useState } from 'react'
 
 export default function ProductDetail() {
 
@@ -24,9 +25,10 @@ export default function ProductDetail() {
         color:#974A4A;
     `
     const Gambar = styled.img`
-        height: 500px;
+        /* height: 500px; */
         box-shadow: 4px 4px 4px black;
         border-radius: 5%;
+        max-width: 100%;
     `
 
     const Toto = styled.p`
@@ -36,14 +38,17 @@ export default function ProductDetail() {
         margin-top:30px;
         `
     const Wraper = styled.div`
-        text-align: center;
         cursor: pointer;
-        &:hover{
-            box-shadow: 4px 4px 10px 4px #974A4A;
-        }
-            `
+        text-align: center;
+        `
     const GambarToping = styled.img`
-        height: 85px;
+        border-radius: 50%;
+        height: 100px;
+        width: 100px;
+        display:inline-block;
+        vertical-align:middle;
+        margin-right:10px;
+
 
     ${Wrapper}:hover & {
         transform: rotate(360deg);
@@ -78,34 +83,99 @@ export default function ProductDetail() {
     z-index: 1;
     left: 90px;
     bottom: 30px;
-    
     `
+    let { name } = useParams();
+
+    // const imago = "[" + image + "]"
+
+    let FindData = localStorage.getItem('PRODUCT_DATA')
+    let product_data = JSON.parse(FindData)
+
+
+    let FindDataa = localStorage.getItem('TOPING_DATA')
+    let toping_data = JSON.parse(FindDataa)
+    // data.forEach(element => {
+    //     if (element.name == name) {
+    //         console.log(element)
+    //         console.log(element.image)
+    //     }
+    // }
+    // )
+
+    // let [datak] = data.map((element) => {
+    //     if (element.name === name) {
+    //         return (
+    //             [element.name, element.price, element.image]
+    //         )
+
+    //     }
+    // })
+    // destructuring ES6
+    // let [namek, pricek, imagek] = [datak[0], datak[1], datak[2]];
+
+    // Handle Onclick
+
+
+    const [conBadge, setShowBadge] = useState("")
+
+
+    // Component Did Mount
+    useEffect(
+        () => {
+            // console.log("start")
+            console.log(conBadge)
+            // Componenet Did Unmount
+            return () => {
+
+            };
+        },
+        // Component Did Update
+        [conBadge]
+    )
 
     return (
         <>
             <Navibar />
-
             <Container>
                 <Wrapper>
                     <Row>
-                        <Col md={5}>
-                            <Gambar src={cleponcoffe} />
-                        </Col>
+                        {product_data.map((element) => {
+                            if (element.name === name) {
+                                return (
+                                    <>
+                                        <Col md={5}>
+                                            <Gambar src={element.image} />
+                                        </Col>
+                                    </>
+                                )
+                            }
+                        })}
+
                         <Col md={7}>
-                            <Detail>Ice Coffee Palm Sugar</Detail>
-                            <HargaItem>Rp.12.000</HargaItem>
+                            {product_data.map((element) => {
+                                if (element.name === name) {
+                                    return (
+                                        <>
+                                            <Detail>{element.name}</Detail>
+                                            <HargaItem>{element.price}</HargaItem>
+                                        </>
+                                    )
+                                }
+                            })}
 
                             <Toto>Toping</Toto>
 
                             <Row>
-                                {Toping.map((Topieng) => {
+                                {toping_data.map((element) => {
                                     return <>
                                         <Col md={3}>
-                                            <Wraper onClick={() => { console.log(Topieng.Nama) }}>
+                                            <Wraper onClick={() => {
+                                                setShowBadge(element.name)
+                                            }}>
                                                 <Badge src={buttonceklis} />
-                                                <GambarToping src={Topieng.Gambar} />
-                                                <NamaToping>{Topieng.Nama}</NamaToping>
-                                                <HargaToping>Rp. {Topieng.Harga}</HargaToping>
+                                                <GambarToping src={element.image} />
+                                                <NamaToping>{element.name}</NamaToping>
+                                                <HargaToping>Rp. {element.price}</HargaToping>
                                             </Wraper>
                                         </Col>
                                     </>
@@ -123,6 +193,22 @@ export default function ProductDetail() {
                     </Row>
                 </Wrapper >
             </Container >
+
+            {/* {
+                data.forEach(element => {
+                    console.log(element)
+                    element.name === namek ?
+                        <>
+                            <p>TITITITIDDDDDDD</p>
+                        </>
+                        :
+                        <>
+                            <p>AAAAAAAAAAAAAAAA</p>
+                        </>
+                })
+
+
+            } */}
         </>
     )
 }

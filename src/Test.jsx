@@ -5,39 +5,28 @@ import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 // import { useNavigate } from "react-router-dom";
 
-export default function RegisterForm({ Show, Hide }) {
+export default function Test({ Show, Hide }) {
     // state untuk input user
     // const navigate = useNavigate();
 
     const [user, setUser] = useState({ email: "", password: "", username: "", image: "", role: "user" })
 
-    let FindData = localStorage.getItem('USER_DATA')
+    // let FindData = localStorage.getItem('USER_DATA')
     let UserContent = []
 
     const submitHandle = (e) => {
         e.preventDefault()
 
-        let data = JSON.parse(FindData)
+        localStorage.setItem("DATA_LOGIN", JSON.stringify(user))
 
-        if (data == null) {
-            UserContent.push(user)
-            localStorage.setItem("USER_DATA", JSON.stringify(UserContent))
-        }
-        else {
-            data.forEach(element => {
-                UserContent.push(element)
-            })
-            UserContent.push(user)
-            localStorage.setItem("USER_DATA", JSON.stringify(UserContent))
-        }
     }
 
-
+    
     return (
-        <Modal show={Show} onHide={Hide} onSubmit={Hide} centered>
-            <Modal.Body>
-                <div className='px-4'>
-                    <h1 className='py-3 text-danger'><b>Register</b></h1>
+        // <Modal show={Show} onHide={Hide} onSubmit={Hide} centered>
+        //     <Modal.Body>
+                // <div className='px-4'>
+                //     <h1 className='py-3 text-danger'><b>Register</b></h1>
                     <Form onSubmit={submitHandle}>
                         <Form.Group className="mb-3">
                             <Form.Label>Email address</Form.Label>
@@ -82,8 +71,8 @@ export default function RegisterForm({ Show, Hide }) {
                             </Button>
                         </div>
                     </Form>
-                </div>
-            </Modal.Body >
-        </Modal >
+                // </div>
+        //     </Modal.Body >
+        // </Modal >
     )
 }
