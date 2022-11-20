@@ -41,7 +41,7 @@ export default function RegisterForm({ Show, Hide }) {
                     <Form onSubmit={submitHandle}>
                         <Form.Group className="mb-3">
                             <Form.Label>Email address</Form.Label>
-                            <div className='border border-danger rounded border-opacity-25' >
+                            <div className='border border-danger rounded' >
                                 <Form.Control type="email" placeholder="Enter email"
                                     onChange={e => setUser({ ...user, email: e.target.value })}
                                     value={user.email}
@@ -50,7 +50,7 @@ export default function RegisterForm({ Show, Hide }) {
                         </Form.Group>
                         <Form.Group className="mb-3" >
                             <Form.Label>Password</Form.Label>
-                            <div className='border border-danger rounded border-opacity-25' >
+                            <div className='border border-danger rounded' >
                                 <Form.Control type="password" placeholder="Enter password"
                                     onChange={e => setUser({ ...user, password: e.target.value })}
                                     value={user.password}
@@ -59,7 +59,7 @@ export default function RegisterForm({ Show, Hide }) {
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Username</Form.Label>
-                            <div className='border border-danger rounded border-opacity-25' >
+                            <div className='border border-danger rounded' >
                                 <Form.Control type="text" placeholder="Enter Username"
                                     onChange={e => setUser({ ...user, username: e.target.value })}
                                     value={user.username}
@@ -68,7 +68,7 @@ export default function RegisterForm({ Show, Hide }) {
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Image</Form.Label>
-                            <div className='border border-danger rounded border-opacity-25' >
+                            <div className='border border-danger rounded' >
                                 <Form.Control type="text" placeholder="Enter Username"
                                     onChange={e => setUser({ ...user, image: e.target.value })}
                                     value={user.image}

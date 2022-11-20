@@ -9,6 +9,7 @@ import kopilogo from '../../assets/kopi.png'
 
 export default function Transaction() {
 
+
     const CardTitle = styled.p`
 font-weight: bold;
 color: red;

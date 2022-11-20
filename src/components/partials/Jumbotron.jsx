@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import JumboRectangle from '../../assets/jumborect.jpg'
-import JumboImage from '../../assets/spongebob.jpg'
+import JumboImage from '../../assets/spongebob.png'
 
 export default function Jumbotron() {
     const Backg = styled.img`

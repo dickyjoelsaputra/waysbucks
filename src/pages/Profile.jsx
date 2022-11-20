@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/esm/Col'
 import Container from 'react-bootstrap/esm/Container'
 
 // import ronaldhino from '../assets/ronaldhino.jpg'
-import Transaction from '../components/partials/MyTransaction'
+import MyTransaction from '../components/partials/MyTransaction'
 
 const CardTitle = styled.p`
 font-weight: bold;
@@ -79,7 +79,7 @@ export default function Profile() {
                         </Row>
                     </Col>
                     <Col md={6}>
-                        <Transaction />
+                        <MyTransaction />
                     </Col>
                 </Row>
             </Container >

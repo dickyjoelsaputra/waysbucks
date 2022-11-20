@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { createContext, useEffect } from 'react'
 import Navibar from '../components/Navibar'
 import Container from 'react-bootstrap/esm/Container'
 import Row from 'react-bootstrap/esm/Row'
@@ -8,6 +8,8 @@ import styled from 'styled-components'
 import buttonceklis from '../assets/buttonceklis.png'
 import { useParams } from 'react-router-dom'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useContext } from 'react';
 
 export default function ProductDetail() {
 
@@ -25,7 +27,7 @@ export default function ProductDetail() {
         color:#974A4A;
     `
     const Gambar = styled.img`
-        /* height: 500px; */
+        height: 500px;
         box-shadow: 4px 4px 4px black;
         border-radius: 5%;
         max-width: 100%;
@@ -40,6 +42,7 @@ export default function ProductDetail() {
     const Wraper = styled.div`
         cursor: pointer;
         text-align: center;
+        position:relative;
         `
     const GambarToping = styled.img`
         border-radius: 50%;
@@ -48,14 +51,19 @@ export default function ProductDetail() {
         display:inline-block;
         vertical-align:middle;
         margin-right:10px;
-
-
-    ${Wrapper}:hover & {
+        margin-top: 10px;
+    /* ${Wrapper}:hover & {
         transform: rotate(360deg);
         transition-duration:30s;
-    }
+    } */
             `
-
+    const Badge = styled.img`
+        position: absolute;
+        z-index: 1;
+        right:20%;
+        box-shadow: 2px 2px 2px 2px black;
+        border-radius: 50%;
+        `
     const HargaToping = styled.p`
         color: #BD0707;
         `
@@ -68,70 +76,86 @@ export default function ProductDetail() {
         background-color: #BD0707; /* Green */
         border: none;
         color: white;
-        padding: 10px 32px;
+        padding: 10px 262px;
+        border-radius: 10px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
         font-size: 20px;
     `
-    const Badge = styled.img`
-    position: relative;
-    font-size: 0.8em;
-    background:green;
-    border-radius: 30px;
-    color:white;
-    z-index: 1;
-    left: 90px;
-    bottom: 30px;
-    `
-    let { name } = useParams();
+    const navigate = useNavigate();
+
+    let { name, price } = useParams();
 
     // const imago = "[" + image + "]"
 
     let FindData = localStorage.getItem('PRODUCT_DATA')
     let product_data = JSON.parse(FindData)
 
-
     let FindDataa = localStorage.getItem('TOPING_DATA')
     let toping_data = JSON.parse(FindDataa)
-    // data.forEach(element => {
-    //     if (element.name == name) {
-    //         console.log(element)
-    //         console.log(element.image)
-    //     }
-    // }
-    // )
 
-    // let [datak] = data.map((element) => {
+    const [Topieng, setTopieng] = useState([])
+    const [TopiengHarga, setTopiengHarga] = useState([0])
+
+    const handleCeklis = (element, price) => {
+
+        let filtered = Topieng.filter(e => e === element)
+
+        if (filtered[0] !== element) {
+            // pas di klik
+            setTopieng([...Topieng, element])
+            setTopiengHarga([Number(...TopiengHarga) + Number(price)])
+        } else {
+            // pas di gak klik
+            setTopieng(Topieng.filter(e => e !== element))
+            setTopiengHarga([Number(...TopiengHarga) - Number(price)])
+        }
+
+    }
+
+    let MapToping = TopiengHarga.map(Number);
+    let ReduceHarga = MapToping.reduce((a, b) => {
+        return a + b;
+    });
+    const totalharga = ReduceHarga + Number(price)
+
+    let DataLogin = localStorage.getItem('DATA_LOGIN')
+    let IsLogin = JSON.parse(DataLogin)
+    const email = IsLogin[0].email
+
+    // const ProductGambar = product_data.map((element) => {
     //     if (element.name === name) {
-    //         return (
-    //             [element.name, element.price, element.image]
-    //         )
-
+    //         console.log(element.image)
+    //         return element.image
     //     }
     // })
-    // destructuring ES6
-    // let [namek, pricek, imagek] = [datak[0], datak[1], datak[2]];
 
-    // Handle Onclick
+    // const gambar = ProductGambar[0]
+
+    const CurrentDataTransaction = { name, Topieng, totalharga, email }
+    const ArrKosong = []
+
+    const myCart = () => {
+        let transdata = localStorage.getItem('TRANSACTION_DATA')
+        let data = JSON.parse(transdata)
+        console.log("berhasil")
+
+        if (data == null) {
+            ArrKosong.push(CurrentDataTransaction)
+            localStorage.setItem("TRANSACTION_DATA", JSON.stringify(ArrKosong))
+        }
+        else {
+            data.forEach(element => {
+                ArrKosong.push(element)
+            })
+            ArrKosong.push(CurrentDataTransaction)
+            localStorage.setItem("TRANSACTION_DATA", JSON.stringify(ArrKosong))
+            navigate("/detail-product/" + name + "/" + price)
+        }
+    }
 
 
-    const [conBadge, setShowBadge] = useState("")
-
-
-    // Component Did Mount
-    useEffect(
-        () => {
-            // console.log("start")
-            console.log(conBadge)
-            // Componenet Did Unmount
-            return () => {
-
-            };
-        },
-        // Component Did Update
-        [conBadge]
-    )
 
     return (
         <>
@@ -154,10 +178,11 @@ export default function ProductDetail() {
                         <Col md={7}>
                             {product_data.map((element) => {
                                 if (element.name === name) {
+                                    // const ProductHargaContext = createContext(element.price)
                                     return (
                                         <>
-                                            <Detail>{element.name}</Detail>
-                                            <HargaItem>{element.price}</HargaItem>
+                                            <Detail>{name}</Detail>
+                                            <HargaItem >Rp. {price}</HargaItem>
                                         </>
                                     )
                                 }
@@ -169,10 +194,15 @@ export default function ProductDetail() {
                                 {toping_data.map((element) => {
                                     return <>
                                         <Col md={3}>
-                                            <Wraper onClick={() => {
-                                                setShowBadge(element.name)
-                                            }}>
-                                                <Badge src={buttonceklis} />
+                                            <Wraper onClick={() => handleCeklis(element.name, element.price)}>
+                                                {
+
+                                                    Topieng.filter(e => e === element.name)[0]
+                                                        ?
+                                                        <Badge src={buttonceklis} />
+                                                        :
+                                                        <Badge className='d-none' src={buttonceklis} />
+                                                }
                                                 <GambarToping src={element.image} />
                                                 <NamaToping>{element.name}</NamaToping>
                                                 <HargaToping>Rp. {element.price}</HargaToping>
@@ -183,11 +213,13 @@ export default function ProductDetail() {
                             </Row>
                             <div className='d-flex justify-content-between'>
                                 <Toto>Total</Toto>
-                                <Toto>Rp. 27000</Toto>
+                                <Toto>Rp. {totalharga}</Toto>
                             </div>
 
                             <div class="d-grid gap-2">
-                                <Buton>Add To Chart</Buton>
+                                <Buton
+                                    onClick={myCart}
+                                >Add To Chart</Buton>
                             </div>
                         </Col>
                     </Row>
@@ -211,4 +243,5 @@ export default function ProductDetail() {
             } */}
         </>
     )
+
 }

@@ -13,8 +13,9 @@ import Profile from './pages/Profile';
 import AddProduct from './admin/AddProduct';
 import AddToping from './admin/AddToping';
 import Transaction from './admin/Transaction';
+import MyCart from './pages/MyCart';
 import Test from './Test'
-import Register from './components/auth/RegisterForm'
+// import Register from './components/auth/RegisterForm'
 
 function App() {
 
@@ -28,8 +29,9 @@ function App() {
           <Route path="/add-product" element={<AddProduct />} />
           <Route path="/add-toping" element={<AddToping />} />
           <Route path="/transaction" element={<Transaction />} />
+          <Route path="/mycart" element={<MyCart />} />
           <Route path="/test" element={<Test />} />
-          <Route path="/asdf" element={<Register />} />
+          {/* <Route path="/asdf" element={<Register />} /> */}
         </Routes>
       </Router>
     </>

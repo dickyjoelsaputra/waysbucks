@@ -104,8 +104,9 @@ export default function Navibar() {
         <div>
             <Navbar expand="lg">
                 <Container>
-                    <Icon />
-                    <Navbar.Brand href="/">WAYSBUCKS</Navbar.Brand>
+                    <a href="/">
+                        <Icon />
+                    </a>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse className="justify-content-end">
 
