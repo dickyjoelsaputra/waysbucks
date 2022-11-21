@@ -23,6 +23,9 @@ import Icon from './partials/Icon';
 import Navadminicon from '../admin/Navadminicon';
 
 export default function Navibar() {
+
+    const navigate = useNavigate();
+
     // handle register with usestate and props
     const [showRegister, setRegisterShow] = useState(false);
 
@@ -79,12 +82,12 @@ export default function Navibar() {
                 console.log("Detail Not Match")
             }
         })
-
         handleLoginClose()
+        // navigate("/profile")
     }
 
     // handle logout
-    const navigate = useNavigate();
+
 
     const Logout = () => {
         console.log("Logout")
@@ -97,7 +100,7 @@ export default function Navibar() {
         let pushing = JSON.parse(DataLogin)
         pushing.pop()
         localStorage.setItem("DATA_LOGIN", JSON.stringify(pushing))
-        navigate("/");
+        navigate("/profile");
     }
 
     return (

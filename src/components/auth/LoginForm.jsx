@@ -3,14 +3,18 @@ import { useState } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { useNavigate } from 'react-router-dom'
 
 export default function LoginForm({ Login, Show, Hide }) {
+
+    const navigate = useNavigate()
     const [user, setUser] = useState({ email: "", password: "" })
 
     const submitHandle = (e) => {
         e.preventDefault()
         // console.log(user)
         Login(user)
+        navigate("/profile")
     }
 
     return (
